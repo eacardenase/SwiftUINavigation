@@ -8,30 +8,26 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var path = [32]
-
     var body: some View {
-        NavigationStack(path: $path) {
-            VStack(spacing: 16) {
-                Button("Show 32") {
-                    path = [32]
+        NavigationStack {
+            List {
+                Section("Numbers Navigation") {
+                    ForEach(0..<5) { i in
+                        NavigationLink("Select Number: \(i)", value: i)
+                    }
                 }
 
-                Button("Show 64") {
-                    path.append(64)
-                }
-
-                Button("Show 32 then 64") {
-                    path = [32, 64]
-                }
-
-                Button("Show 5 different views") {
-                    path = [1, 2, 3, 4, 5]
+                Section("Strings Navigation") {
+                    ForEach(0..<5) { i in
+                        NavigationLink("Select String: \(i)", value: String(i))
+                    }
                 }
             }
-            .font(.title)
             .navigationDestination(for: Int.self) { selection in
-                Text("You selected \(selection)")
+                Text("You selected the number \(selection)")
+            }
+            .navigationDestination(for: String.self) { selection in
+                Text("You selected the string \(selection)")
             }
         }
     }
